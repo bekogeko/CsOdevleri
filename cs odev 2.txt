@@ -1,0 +1,210 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_CS
+{
+    enum KonusmaKonusu
+    {
+        Okul,
+        Hobiler,
+        Is,
+    }
+    enum Hobiler
+    {
+        Hicbirsey,
+        Kayak,
+        Kaykay,
+        Paten,
+        Bisiklet,
+        Tirmanis,
+        Siber,
+        Yazilim,
+        Mimari,
+        Tasarim,
+        Makyaj,
+    }
+    enum Isler
+    {
+        Hayvancılık,
+        Inşaatcılık,
+        E_ticaret,
+        Sağlık,
+        Gıda,
+        Danışmanlık,
+        Yazılım,
+    }
+
+    enum Okullar
+    {
+    OrtaDoğuTeknik,    
+    İstanbulTeknik,
+    İstanbul,
+    Koç,
+    Gazi,
+    Ankara,
+    GebzeTeknik,
+    Bilkent,   
+    Ege,
+    }
+
+
+    class Human
+    {
+        string name;
+        int age;
+        public Hobiler hobi;
+        public Isler Is;
+        public Okullar Okul;
+
+        public Human(string name, int age)
+        {
+            this.name = name;
+            this.age = age;
+        }
+
+        public void Talk(Human hmn, KonusmaKonusu tip)
+        {
+            Console.WriteLine(name + " :Merhaba Benim adim " + name);
+            hmn.SayName();
+
+
+
+            switch (tip)
+            {
+                case KonusmaKonusu.Okul:
+                    AskOkul();
+                    hmn.SayOkul();
+                    hmn.AskOkul(this);
+                    SayOkul(hmn);
+                    break;
+                case KonusmaKonusu.Hobiler:
+                    AskHobby();
+                    hmn.SayHobby();
+                    hmn.AskHobby(this);
+                    SayHobby(hmn);
+                    break;
+                case KonusmaKonusu.Is:
+                    AskJob();
+                    hmn.SayJob();
+                    hmn.AskJob(this);
+                    SayJob(hmn);
+                    break;
+                default:
+                    break;
+            }
+
+
+
+        }
+
+        public void AskOkul()
+        {
+            Console.WriteLine(name + " :Peki sen hangi okulda okuyosun " + name + "?");
+        }
+
+        public void AskOkul(Human hmn)
+        {
+            Console.WriteLine(name + " :Peki sen hangi okulda okuyosun " + hmn.name + "?");
+        }
+
+        public void SayOkul()
+        {
+            Console.WriteLine(name + " : " + Okul + " Üniversitesinde okuyorum.");
+        }
+        public void SayOkul(Human hmn)
+        {
+            if (Okul == hmn.Okul)
+            {
+                Console.WriteLine(name + " :Bende " + Okul + "  Üniversitesinde okuyorum. Belki Bir ara dersler hakkında konuşuruz.");
+            }
+            else
+            {
+                Console.WriteLine(name + " : " + Okul + " Üniversitesinde okuyorum.");
+            }
+        }
+
+        public void AskJob()
+        {
+            Console.WriteLine(name + " :Hangi sektörede çalışıyorsun " + name + "?");
+        }
+
+        public void AskJob(Human hmn)
+        {
+            Console.WriteLine(name + " :Peki sen sektörde çalışıyorsun " + hmn.name + "?");
+        }
+
+        public void SayJob()
+        {
+            Console.WriteLine(name + " : " + Is + " sektöründe çalışıyorum.");
+        }
+        public void SayJob(Human hmn)
+        {
+            if (Is == hmn.Is )
+            {
+                 Console.WriteLine(name + " :Bende " + Is + "  sektöründe çalışıyorum. Belki Bir ara birlikte yapmaliyiz.");
+            }
+            else
+            {
+                Console.WriteLine(name + " : " + Is + " sektöründe çalışıyorum.");
+            }
+        }
+
+        public void SayName()
+        {
+            Console.WriteLine(name + " :Benim adimda " + name);
+        }
+
+        public void AskHobby()
+        {
+            Console.WriteLine(name + " :Hobi olarak nelerle ugrasiyorsun?");
+        }
+        public void AskHobby(Human hmn)
+        {
+            Console.WriteLine(name + " :Peki senin hobilerin neler " + hmn.name + "?");
+        }
+
+        public void SayHobby()
+        {
+            Console.WriteLine(name + " :" + hobi + " ile ugrasiyorum");
+        }
+        public void SayHobby(Human hmn)
+        {
+            if (hmn.hobi == hobi)
+            {
+                Console.WriteLine(name + " :Bende " + hobi + "  ile ugrasiyorum. Belki Bir ara birlikte yapmaliyiz.");
+            }
+            else
+            {
+                Console.WriteLine(name + " :" + hobi + " ile ugrasiyorum");
+            }
+
+        }
+
+    }
+
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Human ptts = new Human("Emir", 10);
+            Human dmts = new Human("Melih", 31);
+
+            dmts.hobi = Hobiler.Bisiklet;
+            ptts.hobi = Hobiler.Bisiklet;
+
+            dmts.Is = Isler.E_ticaret;
+            ptts.Is = Isler.Sağlık;
+
+            dmts.Okul = Okullar.GebzeTeknik;
+            ptts.Okul = Okullar.İstanbulTeknik;
+
+            ptts.Talk(dmts, KonusmaKonusu.Is);
+
+            Console.ReadLine();
+        }
+    }
+}
