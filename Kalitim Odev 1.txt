@@ -1,0 +1,46 @@
+using System;
+
+namespace Kalıtım_ödevi_vol2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            insan ins = new insan();
+            kopek kpk = new kopek();
+
+            ins.ayak = 2;
+            ins.el = 2;
+	    ins.tur = "Insan";
+
+
+            kpk.ayak = 4;
+            kpk.el = 0;
+	    kpk.tur = "Kopek";
+
+            ins.konus();
+            kpk.havla();
+        }
+    }
+    public class Canlı
+    {
+        public int ayak;
+        public int el;
+        public string tur;
+    }
+    public class insan : Canlı
+    {
+        public void konus()
+        { 
+            Console.WriteLine("Selam benim" + el + " kadar elim var" + ayak + " kadar'da ayağım var,turumde "+tur);
+        }
+
+    }
+    public class kopek : Canlı
+    {
+        public void havla()
+        {
+            Console.WriteLine("Hav");
+        }
+    }
+}
