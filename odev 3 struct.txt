@@ -1,0 +1,201 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_CS
+{
+    class Program
+    {
+
+
+        static void Main(string[] args)
+        {
+            List<Movie> Movies = new List<Movie>()
+            {
+                new Movie{ name= "Mucize"               , salon=1 , avaibleSeats=12 ,totalSeats = 25  },
+                new Movie{ name= "Joker"                , salon=2 , avaibleSeats=10 ,totalSeats = 35  },
+                new Movie{ name= "Nefesini Tut"         , salon=3 , avaibleSeats=2  ,totalSeats = 15  },
+                new Movie{ name= "Özgürlüğün Elli Tonu" , salon=4 , avaibleSeats=0  ,totalSeats = 5   },
+                new Movie{ name= "O"                    , salon=5 , avaibleSeats=5  ,totalSeats = 10  },
+                new Movie{ name= "Senden onceki ben"    , salon=6 , avaibleSeats=40 ,totalSeats = 50  },
+                new Movie{ name= "Yukseltme"            , salon=7 , avaibleSeats=10 ,totalSeats = 31  },
+                new Movie{ name= "Deadpool 2"           , salon=8 , avaibleSeats=43 ,totalSeats = 49  },
+                new Movie{ name= "Karanlik Zihinler"    , salon=9 , avaibleSeats=12 ,totalSeats = 13  },
+                new Movie{ name= "After"                , salon=10, avaibleSeats=12 ,totalSeats = 27  },
+                new Movie{ name= "Amar"                 , salon=11, avaibleSeats=1  ,totalSeats = 16  },
+                new Movie{ name= "Sessiz Bir yer"       , salon=12, avaibleSeats=0  ,totalSeats = 9   },
+                new Movie{ name= "Odevsiz Okul"         , salon=13, avaibleSeats=5  ,totalSeats = 25  },
+                new Movie{ name= "Kizarmamis Patates"   , salon=14, avaibleSeats=16 ,totalSeats = 30  }
+            };
+
+            ShowMovies(Movies);
+
+            Console.WriteLine();
+            Console.WriteLine("Bir Salon Numarasi giriniz :");
+            int salonNo = int.Parse(Console.ReadLine());
+            Movie secilenFilm = GetMovieBySalon(Movies, salonNo);
+
+            Console.Clear();
+
+            Console.WriteLine("Secilen filmin Bilgileri");
+            Console.WriteLine(secilenFilm.ToString());
+            Console.WriteLine();
+            Console.WriteLine("Yesil ile belirtilen koltuk sizin koltugunuzdur");
+            Console.WriteLine("Kirmizi ile belirtilen koltuklar dolu koltuklardir");
+            Console.WriteLine("Gri/Beyaz ile belirtilen koltuklar Bos koltuklardir");
+            Console.WriteLine();
+            ShowSeats(secilenFilm);
+
+            Console.WriteLine();
+            Console.WriteLine("Onaylamak icin tamam yazin");
+
+            int seat = secilenFilm.totalSeats - secilenFilm.avaibleSeats + 1;
+            string cevap = Console.ReadLine();
+
+            if (cevap == "tamam" || cevap == "Tamam" || cevap == "tmm" || cevap == "Tmm")
+            {
+                Console.Clear();
+
+                Console.WriteLine("Isim giriniz");
+                string isim = Console.ReadLine();
+
+
+                Console.WriteLine("Soy isim giriniz");
+                string soyisim = Console.ReadLine();
+
+                Console.Clear();
+
+                Console.WriteLine("Bilet bilgileri");
+                Console.WriteLine(isim+" "+soyisim + "| Koltuk: "+seat+"| Film: "+secilenFilm.name + "| Salon: "+ secilenFilm.salon);
+
+                Console.WriteLine("Iyi Eglenceler dileriz");
+            }
+            else
+            {
+                Console.WriteLine("Iyi gunler");
+            }
+
+            Console.ReadLine();
+        }
+
+
+        public static void ShowMovies(List<Movie> movies)
+        {
+            int maxNameLength = 0;
+            int maxSeatLength = 0;
+
+            for (int i = 0; i < movies.Count; i++)
+            {
+                if (movies[i].name.Length > maxNameLength)
+                {
+                    maxNameLength = movies[i].name.Length;
+                }
+
+                if (movies[i].avaibleSeats.ToString().Length > maxSeatLength)
+                {
+                    maxSeatLength = movies[i].avaibleSeats.ToString().Length;
+                }
+
+            }
+
+            foreach (Movie movie in movies)
+            {
+                string newName = movie.name + string.Concat(Enumerable.Repeat(" ", maxNameLength - movie.name.Length));
+                string newSeat = movie.avaibleSeats + string.Concat(Enumerable.Repeat(" ",maxSeatLength- movie.avaibleSeats.ToString().Length)) ;   
+                Console.WriteLine(newName + " | Bos Koltuk: "+ newSeat +" | Salon " +movie.salon );
+            }
+        }
+        public static Movie GetMovieBySalon(List<Movie> movies,int index)
+        {
+            for (int i = 0; i < movies.Count; i++)
+            {
+                if (movies[i].salon == index)
+                {
+                    return movies[i];
+                }
+            }
+            throw new Exception("Not Found Invalid index");
+        }
+
+        public static void ShowSeats(Movie movie)
+        {
+            // 1 seat = [ ]
+            int yourSeat = movie.totalSeats - movie.avaibleSeats +1;
+            
+
+            for (int i = 0; i < (int)movie.totalSeats/5; i++)
+            {
+                for (int x = 1; x <= 5; x++)
+                {
+                    if ((i*5)+x < yourSeat)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("[X]");
+                        Console.ResetColor();
+                    }
+                    else if ((i * 5) + x == yourSeat)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("[X]");
+                        Console.ResetColor();
+                    }
+                    else if ((i * 5) + x > yourSeat)
+                    {
+                        Console.Write("[ ]");
+                    }
+                }
+                Console.WriteLine();
+            }
+            int seatBefore = ((int)movie.totalSeats / 5)*5;
+            for (int i = 1; i <= movie.totalSeats%5; i++)
+            {
+
+                
+                if (seatBefore + i < yourSeat)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("[X]");
+                    Console.ResetColor();
+
+                }
+                else if (seatBefore + i == yourSeat)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("[X]");
+                    Console.ResetColor();
+                }
+                else if (seatBefore + i > yourSeat)
+                {
+                    Console.Write("[ ]");
+                }
+
+                Console.WriteLine();
+            }
+        }
+    }
+
+    struct Movie
+    {
+        public string name;
+        public int salon;
+        public int avaibleSeats;
+        public int totalSeats;
+
+
+
+
+        public override string ToString()
+        {
+            return name + " | Bos Koltuk: "+ avaibleSeats + " Toplam Koltuk: " + totalSeats + " | Salon "+salon ;
+        }
+    }
+    struct Ticket
+    {
+        public Movie movie;
+        public int seatNo;
+    }
+
+
+}
